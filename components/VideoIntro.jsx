@@ -111,47 +111,29 @@ export default function VideoIntro({
 
       {/* Foreground talking-head video, shown in an oval, feather-edged
           panel at its native aspect ratio so footage isn't cropped
-          through the face. */}
+          through the face. Controls live in a wrapper alongside the
+          panel (not inside it) so the oval mask doesn't fade them out,
+          while still keeping them visually anchored to the video in
+          both the desktop and stacked mobile layouts. */}
       {videoAvailable && (
-        <div className={styles.videoPanel}>
-          <video
-            ref={foregroundVideoRef}
-            className={styles.fgVideo}
-            src={videoSrc}
-            autoPlay
-            loop
-            muted={isMuted}
-            playsInline
-            onError={() => setVideoAvailable(false)}
-          />
-        </div>
-      )}
-
-      {videoAvailable && (
-        <>
-          <div className={`${styles.controls} ${styles.enterFade}`}>
-            <button
-              type="button"
-              className={styles.glassButton}
-              onClick={togglePlay}
-              aria-label={isPlaying ? "Pause video" : "Play video"}
-            >
-              {isPlaying ? <PauseIcon /> : <PlayIcon />}
-            </button>
-            <button
-              type="button"
-              className={styles.glassButton}
-              onClick={toggleMute}
-              aria-label={isMuted ? "Unmute video" : "Mute video"}
-            >
-              {isMuted ? <MutedIcon /> : <UnmutedIcon />}
-            </button>
+        <div className={styles.videoWrapper}>
+          <div className={styles.videoPanel}>
+            <video
+              ref={foregroundVideoRef}
+              className={styles.fgVideo}
+              src={videoSrc}
+              autoPlay
+              loop
+              muted={isMuted}
+              playsInline
+              onError={() => setVideoAvailable(false)}
+            />
           </div>
 
           <div ref={soundBadgeRef} className={styles.soundBadge}>
             Tap for sound
           </div>
-        </>
+        </div>
       )}
 
       <div className={styles.gradientOverlay} />
@@ -166,16 +148,39 @@ export default function VideoIntro({
           </span>
         )}
 
-        <h1 className={styles.name}>
-          <span className={`${styles.nameLine} ${styles.enterFade2}`}>
-            {firstName}
-          </span>
-          {lastName && (
-            <span className={`${styles.nameLine} ${styles.enterFade3}`}>
-              {lastName}
+        <div className={styles.nameRow}>
+          <h1 className={styles.name}>
+            <span className={`${styles.nameLine} ${styles.enterFade2}`}>
+              {firstName}
             </span>
+            {lastName && (
+              <span className={`${styles.nameLine} ${styles.enterFade3}`}>
+                {lastName}
+              </span>
+            )}
+          </h1>
+
+          {videoAvailable && (
+            <div className={`${styles.controls} ${styles.mobileControls}`}>
+              <button
+                type="button"
+                className={styles.glassButton}
+                onClick={togglePlay}
+                aria-label={isPlaying ? "Pause video" : "Play video"}
+              >
+                {isPlaying ? <PauseIcon /> : <PlayIcon />}
+              </button>
+              <button
+                type="button"
+                className={styles.glassButton}
+                onClick={toggleMute}
+                aria-label={isMuted ? "Unmute video" : "Mute video"}
+              >
+                {isMuted ? <MutedIcon /> : <UnmutedIcon />}
+              </button>
+            </div>
           )}
-        </h1>
+        </div>
 
         <p className={`${styles.role} ${styles.enterFade4}`}>{role}</p>
 
@@ -193,27 +198,50 @@ export default function VideoIntro({
           </div>
         )}
 
-        <div className={`${styles.actions} ${styles.enterFade5}`}>
-          <button
-            type="button"
-            className={styles.primaryButton}
-            onClick={() =>
-              document
-                .getElementById("selected-work")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
-          >
-            View Projects
-          </button>
-          {githubUrl && (
-            <a
-              href={githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.textLink}
+        <div className={styles.actionsRow}>
+          <div className={`${styles.actions} ${styles.enterFade5}`}>
+            <button
+              type="button"
+              className={styles.primaryButton}
+              onClick={() =>
+                document
+                  .getElementById("selected-work")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
             >
-              GitHub ↗
-            </a>
+              View Projects
+            </button>
+            {githubUrl && (
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.textLink}
+              >
+                GitHub ↗
+              </a>
+            )}
+          </div>
+
+          {videoAvailable && (
+            <div className={`${styles.controls} ${styles.desktopControls}`}>
+              <button
+                type="button"
+                className={styles.glassButton}
+                onClick={togglePlay}
+                aria-label={isPlaying ? "Pause video" : "Play video"}
+              >
+                {isPlaying ? <PauseIcon /> : <PlayIcon />}
+              </button>
+              <button
+                type="button"
+                className={styles.glassButton}
+                onClick={toggleMute}
+                aria-label={isMuted ? "Unmute video" : "Mute video"}
+              >
+                {isMuted ? <MutedIcon /> : <UnmutedIcon />}
+              </button>
+            </div>
           )}
         </div>
       </div>

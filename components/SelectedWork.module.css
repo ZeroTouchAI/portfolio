@@ -132,7 +132,26 @@
     right: 6vw;
     font-size: 3rem;
   }
+  .heading {
+    white-space: normal;
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
   .inner {
-    max-height: none;
+    /* Unlike desktop, mobile keeps the section scrollable with a
+       visible scrollbar, since there isn't room to show all 8 project
+       cards at once and the scrollbar is the cue that more content is
+       there. */
+    max-height: 82vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    -ms-overflow-style: auto;
+  }
+  .inner::-webkit-scrollbar {
+    display: block;
+    width: 4px;
+  }
+  .inner::-webkit-scrollbar-thumb {
+    background: rgba(255, 178, 122, 0.4);
+    border-radius: 4px;
   }
 }

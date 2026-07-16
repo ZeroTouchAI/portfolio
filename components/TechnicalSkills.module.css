@@ -104,6 +104,17 @@
     font-size: 3rem;
   }
   .inner {
-    max-height: none;
+    max-height: 82vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    -ms-overflow-style: auto;
+  }
+  .inner::-webkit-scrollbar {
+    display: block;
+    width: 4px;
+  }
+  .inner::-webkit-scrollbar-thumb {
+    background: rgba(255, 178, 122, 0.4);
+    border-radius: 4px;
   }
 }
