@@ -1,0 +1,408 @@
+.hero {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-void);
+  display: flex;
+  align-items: flex-end;
+  z-index: 0;
+}
+
+.bgVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(38px) saturate(1.15) brightness(0.5);
+  transform: scale(1.15);
+  opacity: 0.45;
+}
+
+/* Shown underneath everything at all times, and becomes the sole
+   background if no video file has been dropped into /public/videos yet. */
+.fallbackGradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      ellipse 70% 55% at 30% 105%,
+      rgba(232, 114, 12, 0.35),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 45% at 85% 10%,
+      rgba(76, 134, 184, 0.28),
+      transparent 65%
+    ),
+    linear-gradient(180deg, var(--bg-void) 0%, var(--bg-deep) 100%);
+}
+
+.gradientOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 4, 3, 0.35) 0%,
+    rgba(5, 4, 3, 0.1) 35%,
+    rgba(5, 4, 3, 0.4) 78%,
+    rgba(5, 4, 3, 0.9) 100%
+  );
+  pointer-events: none;
+}
+
+/* The foreground video sits in an oval, feather-edged panel, offset
+   right of center rather than flush to the edge, instead of a hard
+   full-bleed crop. Native aspect ratio of the source footage, so
+   nothing gets cropped through the subject's face. */
+.videoPanel {
+  position: absolute;
+  top: 50%;
+  left: 67%;
+  transform: translate(-50%, -50%);
+  width: 40vw;
+  max-width: 680px;
+  aspect-ratio: 19 / 12;
+  z-index: 1;
+  overflow: hidden;
+  mask-image: radial-gradient(
+    ellipse 58% 62% at 50% 50%,
+    black 40%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 58% 62% at 50% 50%,
+    black 40%,
+    transparent 100%
+  );
+}
+
+.fgVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  padding: 0 6vw 12vh;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.openBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  padding: 0.4rem 0.9rem 0.4rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(96, 200, 130, 0.4);
+  background: rgba(96, 200, 130, 0.12);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #7ee0a0;
+}
+
+.openDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #56d67f;
+  box-shadow: 0 0 8px 1px rgba(86, 214, 127, 0.7);
+}
+
+.name {
+  font-family: var(--font-body);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-size: clamp(2.75rem, 7.5vw, 5.75rem);
+  line-height: 0.98;
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+}
+
+.nameLine {
+  display: block;
+}
+
+.role {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ember-soft);
+  white-space: nowrap;
+}
+
+.skillRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.3rem;
+}
+
+.skillPill {
+  padding: 0.4rem 0.85rem;
+  border-radius: 4px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--paper-dim);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 0.6rem;
+}
+
+.primaryButton {
+  padding: 0.8rem 1.6rem;
+  border-radius: 4px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.primaryButton:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.textLink {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ember-soft);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.textLink:hover {
+  opacity: 0.8;
+  border-color: var(--ember-soft);
+}
+
+/* Controls are positioned relative to the hero viewport, not the oval
+   panel, since the panel's edges now fade out rather than ending in a
+   hard corner. */
+.controls {
+  position: absolute;
+  z-index: 3;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.glassButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.glassButton:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: translateY(-2px);
+}
+
+.glassButton:focus-visible {
+  outline: 2px solid var(--ember-soft);
+  outline-offset: 2px;
+}
+
+.soundBadge {
+  position: absolute;
+  z-index: 3;
+  top: 1.75rem;
+  right: 1.75rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+.scrollIndicator {
+  position: absolute;
+  z-index: 3;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  background: none;
+  border: none;
+  color: var(--paper-dim);
+}
+
+.scrollLine {
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(
+    180deg,
+    var(--ember-soft) 0%,
+    rgba(255, 178, 122, 0) 100%
+  );
+  animation: pulseLine 2.2s ease-in-out infinite;
+}
+
+.scrollLabel {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+@keyframes pulseLine {
+  0% {
+    opacity: 0.3;
+    transform: scaleY(0.6);
+    transform-origin: top;
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  100% {
+    opacity: 0.3;
+    transform: scaleY(0.6);
+    transform-origin: top;
+  }
+}
+
+/* Entrance animation, plain CSS instead of a JS-chained timeline, so
+   there's no dependency on ref timing or animation-library sequencing
+   that could leave an element stuck at its hidden starting state. */
+@keyframes fadeUpIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.enterFade,
+.enterFade1,
+.enterFade2,
+.enterFade3,
+.enterFade4,
+.enterFade5,
+.enterFade6 {
+  animation: fadeUpIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.enterFade1 {
+  animation-delay: 0.1s;
+}
+.enterFade2 {
+  animation-delay: 0.25s;
+}
+.enterFade3 {
+  animation-delay: 0.37s;
+}
+.enterFade4 {
+  animation-delay: 0.5s;
+}
+.enterFade5 {
+  animation-delay: 0.85s;
+}
+.enterFade6 {
+  animation-delay: 1.05s;
+}
+
+/* Below this width, switch to a stacked layout: video on top, content
+   below, both flowing normally. Position is relative (not sticky) here
+   and height is auto (not a fixed 100vh with internal overflow) — a
+   fixed-height scrollable hero on mobile was trapping scroll input and
+   preventing the page from reaching the sections below it. */
+@media (max-width: 900px) {
+  .hero {
+    position: relative;
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .videoPanel {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 92%;
+    height: auto;
+    max-width: 480px;
+    margin: 2.5rem auto 0;
+  }
+
+  .gradientOverlay {
+    display: none;
+  }
+
+  .content {
+    padding: 2rem 6vw 5rem;
+    max-width: none;
+  }
+
+  .role {
+    white-space: normal;
+  }
+
+  .scrollIndicator {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollLine {
+    animation: none;
+  }
+}

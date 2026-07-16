@@ -1,0 +1,109 @@
+.section {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 20;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 4rem 6vw;
+  background: var(--bg-void);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cornerNumber {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 6vw;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  color: rgba(245, 239, 230, 0.06);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  max-height: 84vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.inner::-webkit-scrollbar {
+  display: none;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ember-soft);
+}
+
+.heading {
+  margin-top: 0.6rem;
+  font-family: var(--font-body);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  line-height: 1;
+  color: var(--paper);
+}
+
+.grid {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem 3rem;
+}
+
+.groupTitle {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--monitor-blue);
+  margin-bottom: 0.75rem;
+}
+
+.pillRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pill {
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--paper-dim);
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 5rem 6vw 3rem;
+    align-items: flex-start;
+  }
+  .cornerNumber {
+    top: 1.5rem;
+    bottom: auto;
+    right: 6vw;
+    font-size: 3rem;
+  }
+  .inner {
+    max-height: none;
+  }
+}

@@ -1,0 +1,59 @@
+:root {
+  /* Color tokens — warm cinematic palette */
+  --bg-void: #0a0807;
+  --bg-deep: #050403;
+  --ember: #e8720c;
+  --ember-soft: #ffb27a;
+  --monitor-blue: #4c86b8;
+  --paper: #f5efe6;
+  --paper-dim: rgba(245, 239, 230, 0.62);
+  --glass-fill: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.14);
+
+  --font-display: "Fraunces", serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--bg-void);
+  color: var(--paper);
+  font-family: var(--font-body);
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--ember);
+  color: var(--bg-void);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
