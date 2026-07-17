@@ -8,6 +8,8 @@
   display: flex;
   align-items: flex-end;
   z-index: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .bgVideo {
@@ -249,7 +251,21 @@
   bottom: 1.75rem;
   right: 1.75rem;
   display: flex;
+  align-items: center;
   gap: 0.6rem;
+}
+
+.glassButtonRow {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.soundHint {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--ember-soft);
+  white-space: nowrap;
 }
 
 .glassButton {
@@ -277,23 +293,7 @@
   outline-offset: 2px;
 }
 
-.soundBadge {
-  position: absolute;
-  z-index: 3;
-  top: 1.75rem;
-  right: 1.75rem;
-  padding: 0.5rem 0.9rem;
-  border-radius: 999px;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-fill);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--paper-dim);
-}
+
 
 .scrollIndicator {
   position: absolute;
@@ -443,9 +443,17 @@
   .mobileControls,
   .controls.mobileControls {
     display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: 0.35rem;
     position: static;
     bottom: auto;
     right: auto;
+  }
+
+  .mobileControls .glassButtonRow {
+    display: flex;
+    gap: 0.6rem;
   }
 
   .role {

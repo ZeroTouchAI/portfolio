@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
 import CinematicLayer from "./CinematicLayer";
 import styles from "./VideoIntro.module.css";
 
@@ -16,7 +15,6 @@ export default function VideoIntro({
 }) {
   const foregroundVideoRef = useRef(null);
   const backgroundVideoRef = useRef(null);
-  const soundBadgeRef = useRef(null);
 
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
@@ -42,22 +40,6 @@ export default function VideoIntro({
     }
   }, []);
 
-  // Auto-hide the "tap for sound" badge after a few seconds. This is a
-  // single standalone tween (not a long chained timeline), so there's
-  // no risk of it getting stuck mid-sequence.
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (soundBadgeRef.current) {
-        gsap.to(soundBadgeRef.current, {
-          opacity: 0,
-          duration: 0.6,
-          pointerEvents: "none",
-        });
-      }
-    }, 4000);
-    return () => clearTimeout(timer);
-  }, []);
-
   function togglePlay() {
     const video = foregroundVideoRef.current;
     const bgVideo = backgroundVideoRef.current;
@@ -78,10 +60,6 @@ export default function VideoIntro({
     if (!video) return;
     video.muted = !isMuted;
     setIsMuted(!isMuted);
-
-    if (soundBadgeRef.current) {
-      gsap.to(soundBadgeRef.current, { opacity: 0, duration: 0.4 });
-    }
   }
 
   function scrollToNext() {
@@ -129,10 +107,6 @@ export default function VideoIntro({
               onError={() => setVideoAvailable(false)}
             />
           </div>
-
-          <div ref={soundBadgeRef} className={styles.soundBadge}>
-            Tap for sound
-          </div>
         </div>
       )}
 
@@ -162,22 +136,27 @@ export default function VideoIntro({
 
           {videoAvailable && (
             <div className={`${styles.controls} ${styles.mobileControls}`}>
-              <button
-                type="button"
-                className={styles.glassButton}
-                onClick={togglePlay}
-                aria-label={isPlaying ? "Pause video" : "Play video"}
-              >
-                {isPlaying ? <PauseIcon /> : <PlayIcon />}
-              </button>
-              <button
-                type="button"
-                className={styles.glassButton}
-                onClick={toggleMute}
-                aria-label={isMuted ? "Unmute video" : "Mute video"}
-              >
-                {isMuted ? <MutedIcon /> : <UnmutedIcon />}
-              </button>
+              {isMuted && (
+                <span className={styles.soundHint}>Click for sound</span>
+              )}
+              <div className={styles.glassButtonRow}>
+                <button
+                  type="button"
+                  className={styles.glassButton}
+                  onClick={togglePlay}
+                  aria-label={isPlaying ? "Pause video" : "Play video"}
+                >
+                  {isPlaying ? <PauseIcon /> : <PlayIcon />}
+                </button>
+                <button
+                  type="button"
+                  className={styles.glassButton}
+                  onClick={toggleMute}
+                  aria-label={isMuted ? "Unmute video" : "Mute video"}
+                >
+                  {isMuted ? <MutedIcon /> : <UnmutedIcon />}
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -225,22 +204,27 @@ export default function VideoIntro({
 
           {videoAvailable && (
             <div className={`${styles.controls} ${styles.desktopControls}`}>
-              <button
-                type="button"
-                className={styles.glassButton}
-                onClick={togglePlay}
-                aria-label={isPlaying ? "Pause video" : "Play video"}
-              >
-                {isPlaying ? <PauseIcon /> : <PlayIcon />}
-              </button>
-              <button
-                type="button"
-                className={styles.glassButton}
-                onClick={toggleMute}
-                aria-label={isMuted ? "Unmute video" : "Mute video"}
-              >
-                {isMuted ? <MutedIcon /> : <UnmutedIcon />}
-              </button>
+              {isMuted && (
+                <span className={styles.soundHint}>Click for sound</span>
+              )}
+              <div className={styles.glassButtonRow}>
+                <button
+                  type="button"
+                  className={styles.glassButton}
+                  onClick={togglePlay}
+                  aria-label={isPlaying ? "Pause video" : "Play video"}
+                >
+                  {isPlaying ? <PauseIcon /> : <PlayIcon />}
+                </button>
+                <button
+                  type="button"
+                  className={styles.glassButton}
+                  onClick={toggleMute}
+                  aria-label={isMuted ? "Unmute video" : "Mute video"}
+                >
+                  {isMuted ? <MutedIcon /> : <UnmutedIcon />}
+                </button>
+              </div>
             </div>
           )}
         </div>

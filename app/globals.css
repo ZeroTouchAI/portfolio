@@ -29,6 +29,13 @@ body {
   scroll-behavior: smooth;
 }
 
+html {
+  /* Sections pause and settle in place after each scroll gesture,
+     rather than letting a fast scroll or swipe fly straight through
+     multiple sections. Applies on both desktop and mobile. */
+  scroll-snap-type: y mandatory;
+}
+
 body {
   overflow-x: hidden;
 }
@@ -50,6 +57,7 @@ button {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+    scroll-snap-type: none;
   }
   * {
     animation-duration: 0.01ms !important;
