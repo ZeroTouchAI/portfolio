@@ -29,11 +29,13 @@ body {
   scroll-behavior: smooth;
 }
 
-html {
-  /* Sections pause and settle in place after each scroll gesture,
-     rather than letting a fast scroll or swipe fly straight through
-     multiple sections. Applies on both desktop and mobile. */
-  scroll-snap-type: y mandatory;
+/* Scroll-snap only on mobile: each section pauses and settles in place
+   after a scroll/swipe gesture instead of flying past, giving people a
+   moment to read. Desktop keeps its original free, continuous scroll. */
+@media (max-width: 900px) {
+  html {
+    scroll-snap-type: y mandatory;
+  }
 }
 
 body {
